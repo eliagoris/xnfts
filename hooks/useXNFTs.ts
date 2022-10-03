@@ -27,9 +27,13 @@ const useXNFTs = () => {
 
     console.time("Fetched")
     const xnfts = await fetchXNFTs(provider)
-    setXnfts(xnfts)
     console.timeEnd("Fetched")
     console.log(xnfts)
+
+    const ordered = xnfts.sort((a, b) =>
+      a.metadata.data.name.localeCompare(b.metadata.data.name)
+    )
+    setXnfts(ordered)
   }, [])
 
   useEffect(() => {

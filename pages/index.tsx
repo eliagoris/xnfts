@@ -1,14 +1,14 @@
 /** @jsxImportSource theme-ui */
-import Head from "next/head"
 
 import { Heading, Text, Label } from "@theme-ui/components"
 
 import Header from "@/components/Header/Header"
-import NFTSelectInput from "@/components/NFTSelectInput/NFTSelectInput"
 import useWalletNFTs from "@/hooks/useWalletNFTs"
+import useXNFTs from "@/hooks/useXNFTs"
 
 export default function Home() {
-  const { walletNFTs } = useWalletNFTs()
+  useXNFTs()
+
   return (
     <>
       <Header />

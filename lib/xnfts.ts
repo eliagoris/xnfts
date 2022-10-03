@@ -1,3 +1,9 @@
+/**
+ * Most code is from:
+ * @url https://github.com/coral-xyz/backpack/
+ * @url https://github.com/coral-xyz/backpack/blob/master/packages/common/src/solana/programs/xnft.ts
+ */
+
 import { metadata } from "@project-serum/token"
 import { Program, Provider, web3, utils } from "@project-serum/anchor"
 import { IDL, Xnft } from "types/xnft"
@@ -23,9 +29,6 @@ export async function fetchInstalls(
 > {
   const client = xnftClient(provider)
 
-  //
-  // Fetch all xnfts installed by this user.
-  //
   const filters = []
 
   if (wallet) {

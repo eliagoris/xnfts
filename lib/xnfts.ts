@@ -2,6 +2,7 @@ import { metadata } from "@project-serum/token"
 import { Program, Provider, web3, utils } from "@project-serum/anchor"
 import { IDL, Xnft } from "types/xnft"
 import { externalResourceUri } from "@coral-xyz/common-public"
+import { ParsedXnft } from "@/hooks/useXNFTs"
 
 export function xnftClient(provider: Provider): Program<Xnft> {
   return new Program<Xnft>(IDL, XNFT_PROGRAM_ID, provider)
@@ -48,13 +49,7 @@ export async function fetchInstalls(
 export async function fetchXNFTs(
   provider: Provider,
   wallet?: web3.PublicKey
-): Promise<
-  Array<{
-    publicKey: web3.PublicKey
-    metadata: metadata.Metadata
-    metadataBlob: any
-  }>
-> {
+): Promise<Array<ParsedXnft>> {
   const client = xnftClient(provider)
 
   const filters = []
@@ -89,6 +84,7 @@ const getParsedAccounts = async (provider, accounts) => {
     if (!t) {
       return null
     }
+
     return metadata.decodeMetadata(t.account.data)
   })
 

@@ -1,14 +1,21 @@
 import { useConnection } from "@solana/wallet-adapter-react"
-import { web3, AnchorProvider } from "@project-serum/anchor"
+import { web3, AnchorProvider, ProgramAccount } from "@project-serum/anchor"
 import { useCallback, useEffect, useState } from "react"
 import { fetchInstalls, fetchXNFTs } from "lib/xnfts"
 import { metadata } from "@project-serum/token"
+import { Xnft, IDL } from "types/xnft"
+import {
+  IdlTypes,
+  TypeDef,
+} from "@project-serum/anchor/dist/cjs/program/namespace/types"
 
 export type ParsedXnft = {
   publicKey: web3.PublicKey
   metadata: metadata.Metadata
   metadataBlob: any
+  install: ProgramAccount<TypeDef<typeof IDL.accounts[0], IdlTypes<typeof IDL>>>
 }
+
 const useXNFTs = () => {
   const { connection } = useConnection()
   const [xnfts, setXnfts] = useState<ParsedXnft[]>(null)

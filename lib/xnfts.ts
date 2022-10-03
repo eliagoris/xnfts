@@ -38,6 +38,7 @@ export async function fetchInstalls(
   }
 
   const installAccounts = await client.account.install.all(filters)
+
   const installs = await getParsedAccounts(provider, installAccounts)
 
   return installs

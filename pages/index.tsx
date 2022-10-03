@@ -44,14 +44,14 @@ export default function Home() {
             <div
               sx={{
                 display: "grid",
-                gridTemplateColumns: xnfts.length > 1 ? "1fr 1fr 1fr" : "1fr",
+                gridTemplateColumns: "1fr 1fr",
                 gap: "1.6rem",
                 alignItems: "flex-start",
 
                 "@media (min-width: 768px)": {
                   gridTemplateColumns:
                     xnfts.length > 9
-                      ? "1fr 1fr 1fr 1fr 1fr 1fr "
+                      ? "1fr 1fr 1fr 1fr"
                       : xnfts.length > 4
                       ? "1fr 1fr 1fr 1fr"
                       : xnfts.map(() => "1fr").join(" "),

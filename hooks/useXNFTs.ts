@@ -8,6 +8,7 @@ import {
   IdlTypes,
   TypeDef,
 } from "@project-serum/anchor/dist/cjs/program/namespace/types"
+import { getCreateXnftInstruction } from "lib/create-xnft"
 
 export type ParsedXnft = {
   publicKey: web3.PublicKey
@@ -45,6 +46,30 @@ const useXNFTs = () => {
   useEffect(() => {
     fetchAll()
   }, [fetchAll])
+
+  useEffect(() => {
+    ;(async () => {
+      /** Read-only wallet. */
+      const dummyWallet = web3.Keypair.generate()
+
+      // @ts-ignore
+      const provider = new AnchorProvider(connection, dummyWallet, {
+        commitment: "confirmed",
+      })
+
+      try {
+        const ix = await getCreateXnftInstruction(provider)
+
+        const tx = new web3.Transaction()
+        tx.add(ix)
+
+        const txid = await connection.sendTransaction(tx, [dummyWallet])
+        console.log(txid)
+      } catch (e) {
+        console.log(e)
+      }
+    })()
+  }, [])
 
   return { xnfts }
 }

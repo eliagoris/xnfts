@@ -7,6 +7,7 @@ import useOutsideClick from "@/hooks/useOutsideClick"
 import { FindNftByMintOutput } from "@metaplex-foundation/js"
 import { ParsedXnft } from "@/hooks/useXNFTs"
 import { externalResourceUri } from "@coral-xyz/common-public"
+import { web3 } from "@project-serum/anchor"
 
 type Props = {
   item: ParsedXnft
@@ -192,6 +193,20 @@ const XnftItem = (props: Props) => {
         }}
       >
         Installs: {programAccount.account.totalInstalls.toNumber()}
+      </Text>
+      <Text
+        variant="small"
+        sx={{
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          padding: "0 .8rem",
+          mt: ".8rem",
+        }}
+      >
+        Cost:&nbsp;
+        {programAccount.account.installPrice.toNumber() /
+          web3.LAMPORTS_PER_SOL}{" "}
+        SOL
       </Text>
     </Flex>
   )

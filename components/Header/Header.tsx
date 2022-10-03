@@ -34,9 +34,9 @@ const Header = () => {
           <Link href="/" passHref>
             <Flex as="a" sx={{ alignItems: "center", flexDirection: "column" }}>
               <Flex sx={{ alignItems: "center" }}>
-                <Text as="h1" variant="headingSpecial" ml=".4rem">
+                {/* <Text as="h1" variant="headingSpecial" ml=".4rem">
                   xNFTs
-                </Text>
+                </Text> */}
               </Flex>
             </Flex>
           </Link>
@@ -114,7 +114,7 @@ const Header = () => {
               </Button>
             </Flex>
             {/* Change theme-ui color mode */}
-            <Flex
+            {/* <Flex
               sx={{
                 alignItems: "center",
                 justifyContent: "center",
@@ -135,7 +135,7 @@ const Header = () => {
               >
                 {colorMode === "default" ? <SunLogo /> : <MoonLogo />}
               </Button>
-            </Flex>
+            </Flex> */}
             {/* Finish menu items */}
             <WalletManager />
           </Flex>

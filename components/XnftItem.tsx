@@ -153,7 +153,6 @@ const XnftItem = (props: Props) => {
         variant="small"
         sx={{
           overflow: "hidden",
-          whiteSpace: "nowrap",
           textOverflow: "ellipsis",
           padding: "0 .8rem",
           mt: ".8rem",

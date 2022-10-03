@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <main
         sx={{
           display: "flex",
@@ -26,14 +26,18 @@ export default function Home() {
         }}
       >
         <Heading mb=".8rem" variant="heading1">
-          xNFTs
+          Minted xNFTs
         </Heading>
-        <Text>xNFT apps</Text>
+        <Text>
+          List of minted (or published) xNFTs on{" "}
+          {process.env.NEXT_PUBLIC_CONNECTION_NETWORK}:
+        </Text>
 
         <Flex
           sx={{
             flexDirection: "column",
             alignItems: "center",
+            marginTop: "3.2rem",
           }}
         >
           {xnfts ? (
@@ -42,7 +46,7 @@ export default function Home() {
                 display: "grid",
                 gridTemplateColumns: xnfts.length > 1 ? "1fr 1fr 1fr" : "1fr",
                 gap: "1.6rem",
-                alignItems: "center",
+                alignItems: "flex-start",
 
                 "@media (min-width: 768px)": {
                   gridTemplateColumns:
@@ -65,7 +69,13 @@ export default function Home() {
               })}
             </div>
           ) : (
-            <LoadingIcon />
+            <Text
+              sx={{
+                padding: "3.2rem 0",
+              }}
+            >
+              <LoadingIcon />
+            </Text>
           )}
         </Flex>
       </main>

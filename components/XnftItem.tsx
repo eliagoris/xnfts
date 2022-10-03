@@ -33,7 +33,7 @@ const XnftItem = (props: Props) => {
     },
     publicKey,
     metadataBlob,
-    install,
+    programAccount,
   } = item
 
   const handleOnClick = (item: ParsedXnft) => () =>
@@ -180,7 +180,7 @@ const XnftItem = (props: Props) => {
           mt: ".8rem",
         }}
       >
-        Cost: {install.account.installPrice.toNumber() / web3.LAMPORTS_PER_SOL}
+        Cost: {programAccount.account.installPrice.toNumber() / web3.LAMPORTS_PER_SOL}
       </Text> */}
       <Text
         variant="small"
@@ -191,7 +191,7 @@ const XnftItem = (props: Props) => {
           mt: ".8rem",
         }}
       >
-        Installs: {install.account.totalInstalls.toNumber()}
+        Installs: {programAccount.account.totalInstalls.toNumber()}
       </Text>
     </Flex>
   )

@@ -5,10 +5,20 @@
  */
 
 import { metadata } from "@project-serum/token"
-import { Program, Provider, web3, utils } from "@project-serum/anchor"
+import {
+  Program,
+  Provider,
+  web3,
+  utils,
+  ProgramAccount,
+} from "@project-serum/anchor"
 import { IDL, Xnft } from "types/xnft"
 import { externalResourceUri } from "@coral-xyz/common-public"
 import { ParsedXnft } from "@/hooks/useXNFTs"
+import {
+  IdlTypes,
+  TypeDef,
+} from "@project-serum/anchor/dist/cjs/program/namespace/types"
 
 export function xnftClient(provider: Provider): Program<Xnft> {
   return new Program<Xnft>(IDL, XNFT_PROGRAM_ID, provider)
@@ -18,15 +28,22 @@ export const XNFT_PROGRAM_ID = new web3.PublicKey(
   "BaHSGaf883GA3u8qSC5wNigcXyaScJLSBJZbALWvPcjs"
 )
 
+export type ParsedInstall = {
+  publicKey: web3.PublicKey
+  metadata: metadata.Metadata
+  metadataBlob: any
+  programAccount: ProgramAccount<
+    TypeDef<typeof IDL.accounts[1], IdlTypes<typeof IDL>>
+  >
+}
+
 /**
  * Fetch and parses the program "install" accounts.
  */
 export async function fetchInstalls(
   provider: Provider,
   wallet?: web3.PublicKey
-): Promise<
-  Array<{ publicKey: web3.PublicKey; medtadata: any; metadataBlob: any }>
-> {
+): Promise<Array<ParsedInstall>> {
   const client = xnftClient(provider)
 
   const filters = []
@@ -113,7 +130,7 @@ const getParsedAccounts = async (provider, accounts) => {
       metadataPublicKey,
       metadata: xnftMetadata[idx],
       metadataBlob: xnftMetadataBlob[idx],
-      install: accounts[idx],
+      programAccount: accounts[idx],
     })
   })
 

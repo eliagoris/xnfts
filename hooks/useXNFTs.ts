@@ -13,7 +13,9 @@ export type ParsedXnft = {
   publicKey: web3.PublicKey
   metadata: metadata.Metadata
   metadataBlob: any
-  install: ProgramAccount<TypeDef<typeof IDL.accounts[0], IdlTypes<typeof IDL>>>
+  programAccount: ProgramAccount<
+    TypeDef<typeof IDL.accounts[0], IdlTypes<typeof IDL>>
+  >
 }
 
 const useXNFTs = () => {
@@ -28,9 +30,6 @@ const useXNFTs = () => {
     const provider = new AnchorProvider(connection, dummyWallet, {
       commitment: "confirmed",
     })
-
-    // const installs = await fetchInstalls(provider)
-    // console.log(installs)
 
     console.time("Fetched")
     const xnfts = await fetchXNFTs(provider)

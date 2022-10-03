@@ -1,13 +1,14 @@
 /** @jsxImportSource theme-ui */
 
-import { Heading, Text, Label } from "@theme-ui/components"
+import { Heading, Text, Label, Flex } from "@theme-ui/components"
 
 import Header from "@/components/Header/Header"
-import useWalletNFTs from "@/hooks/useWalletNFTs"
 import useXNFTs from "@/hooks/useXNFTs"
+import { LoadingIcon } from "@/components/icons/LoadingIcon"
+import XnftItem from "@/components/XnftItem"
 
 export default function Home() {
-  useXNFTs()
+  const { xnfts } = useXNFTs()
 
   return (
     <>
@@ -21,12 +22,52 @@ export default function Home() {
           maxWidth: "64rem",
           margin: "0 auto",
           marginTop: "4rem",
+          padding: "0 1.6rem",
         }}
       >
         <Heading mb=".8rem" variant="heading1">
           xNFTs
         </Heading>
         <Text>xNFT apps</Text>
+
+        <Flex
+          sx={{
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          {xnfts ? (
+            <div
+              sx={{
+                display: "grid",
+                gridTemplateColumns: xnfts.length > 1 ? "1fr 1fr 1fr" : "1fr",
+                gap: "1.6rem",
+                alignItems: "center",
+
+                "@media (min-width: 768px)": {
+                  gridTemplateColumns:
+                    xnfts.length > 9
+                      ? "1fr 1fr 1fr 1fr 1fr 1fr "
+                      : xnfts.length > 4
+                      ? "1fr 1fr 1fr 1fr"
+                      : xnfts.map(() => "1fr").join(" "),
+                },
+              }}
+            >
+              {xnfts.map((xnft) => {
+                /** @TODO: xnft object doesn't have pub key */
+                // if (!xnft.publicKey) {
+                //   console.log(xnft)
+                // }
+                return (
+                  <XnftItem key={xnft.metadata.mint.toString()} item={xnft} />
+                )
+              })}
+            </div>
+          ) : (
+            <LoadingIcon />
+          )}
+        </Flex>
       </main>
 
       <footer

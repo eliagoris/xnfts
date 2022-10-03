@@ -1,10 +1,17 @@
 import { useConnection } from "@solana/wallet-adapter-react"
 import { web3, AnchorProvider } from "@project-serum/anchor"
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { fetchInstalls, fetchXNFTs } from "lib/xnfts"
+import { metadata } from "@project-serum/token"
 
+export type ParsedXnft = {
+  publicKey: web3.PublicKey
+  metadata: metadata.Metadata
+  metadataBlob: any
+}
 const useXNFTs = () => {
   const { connection } = useConnection()
+  const [xnfts, setXnfts] = useState<ParsedXnft[]>(null)
 
   const fetchAll = useCallback(async () => {
     /** Read-only wallet. */
@@ -18,15 +25,18 @@ const useXNFTs = () => {
     // const installs = await fetchInstalls(provider)
     // console.log(installs)
 
-    console.log("fetching...")
+    console.time("Fetched")
     const xnfts = await fetchXNFTs(provider)
-    console.log("finished")
+    setXnfts(xnfts)
+    console.timeEnd("Fetched")
     console.log(xnfts)
   }, [])
 
   useEffect(() => {
     fetchAll()
   }, [fetchAll])
+
+  return { xnfts }
 }
 
 export default useXNFTs

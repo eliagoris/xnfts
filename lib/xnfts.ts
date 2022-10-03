@@ -49,7 +49,11 @@ export async function fetchXNFTs(
   provider: Provider,
   wallet?: web3.PublicKey
 ): Promise<
-  Array<{ publicKey: web3.PublicKey; medtadata: any; metadataBlob: any }>
+  Array<{
+    publicKey: web3.PublicKey
+    metadata: metadata.Metadata
+    metadataBlob: any
+  }>
 > {
   const client = xnftClient(provider)
 
@@ -103,7 +107,7 @@ const getParsedAccounts = async (provider, accounts) => {
   //
   // Combine it all into a single list.
   //
-  const xnfts = [] as any
+  const xnfts = []
   metadataPubkeys.forEach((metadataPublicKey, idx) => {
     xnfts.push({
       metadataPublicKey,
